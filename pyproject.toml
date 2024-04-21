@@ -1,0 +1,73 @@
+[tool.poetry]
+name = "fast-api-poetry"
+version = "0.1.0"
+description = "A FastAPI project with Poetry"
+authors = ["Jag Reehal <jag@jagreehal.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+camelcase = "*"
+email-validator = "*"
+fastapi = "*"
+httpx = "*"
+uvicorn = "*"
+structlog = "*"
+python-dotenv = "*"
+
+[tool.poetry.dev-dependencies]
+black = "22.3.0"
+ruff = "*"
+isort = "*"
+pydantic = "*"
+pytest = "*"
+pytest-cov = "*"
+pytest-watch = "*"
+pytest-asyncio = "*"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+# https://beta.ruff.rs/docs/configuration/
+line-length = 88
+select = [
+    "B", # Flake8-bugbear
+    "C", # McCabe complexity
+    "E", # PyCodeStyle (E/W)
+    "F", # PyFlakes
+    "I", # Import rules (isort)
+    "W", # PyCodeStyle (E/W)
+    "T", # PyTypeChecker
+]
+ignore = [
+    "E203", # whitespace before ':'
+    "E266", # too many leading '#' for block comment
+    "E501", # line too long
+]
+
+[tool.black]
+line-length = 88
+
+[tool.pyright]
+useLibraryCodeForTypes = true
+exclude = [".cache"]
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+line_length = 88
+
+[tool.pytest.ini_options]
+testpaths = "app"
+
+[tool.coverage.run]
+branch = true
+source = ["app"]
+
+[tool.coverage.report]
+show_missing = true

@@ -1,0 +1,36 @@
+name: Test
+
+on:
+  pull_request: {}
+  push:
+    branches: main
+    tags: '*'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.11
+
+      - name: Install dependencies with poetry
+        run: |
+          pip install poetry
+          poetry install
+
+      - name: Install pyright
+        run: npm install -g pyright
+
+      - name: Check code quality
+        run: |
+          poetry run isort --check-only --diff .
+          poetry run black --check .
+          poetry run ruff app/
+          poetry run pyright app/
+
+      - name: Run tests with coverage
+        run: poetry run pytest --cov --cov-fail-under=80
